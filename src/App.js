@@ -1,5 +1,4 @@
 import "./styles.css";
-import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Register from "./components/Register";
 import Login from "./components/Login";
@@ -20,10 +19,60 @@ import Email from "./pages/emailModule/Email";
 import VolunteersForm from "./pages/volunteerModule/VoluntersForm";
 import AddAnalysis from "./pages/campaignDetails/AddAnalysis";
 import Sms from "./pages/smsModule/Sms";
+import { Oval } from "react-loader-spinner";
+import { useLocation, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      setLoading(true);
+    };
+
+    const handleRouteChangeEnd = () => {
+      setLoading(false);
+    };
+    const unlisten = () => {
+      handleRouteChangeStart();
+      setTimeout(() => {
+        handleRouteChangeEnd();
+      }, 1500);
+    };
+    unlisten();
+    return () => {};
+  }, [location]);
+
   return (
     <div>
+      {loading && (
+        <div
+          style={{
+            position: "absolute",
+            zIndex: "10",
+            background: "white",
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Oval
+            visible={true}
+            height="90"
+            width="90"
+            strokeWidth="3"
+            color="#f76c24"
+            secondaryColor="#f76c24"
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      )}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />

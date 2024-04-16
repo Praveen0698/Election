@@ -29,6 +29,7 @@ export default function RallyPermission() {
               </div>
             </div>
             <div className="paper-img-div">
+            <div className="raally">
               <div className="rallyPermission-bg">
                 <div className="rallyPoster">
                   <div className="rallyImg">
@@ -54,6 +55,7 @@ export default function RallyPermission() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

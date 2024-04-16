@@ -189,6 +189,11 @@
   margin-top: 10vh;
   overflow: scroll;
 }
+@media (max-width: 1200px) {
+  .sidebar {
+    display: none;
+  }
+}
 
 .sidebar::-webkit-scrollbar {
   display: none;
@@ -318,7 +323,32 @@
   margin: 10px;
   padding: 0;
 }
+.dashboard-head-div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  margin: 20px;
+  border-radius: 5px;
+}
+@media screen and (max-width: 580px) {
+  .dashboard-head-div {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+  }
 
+  .col-xl-9 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .col-xl-3 {
+    width: 100%;
+  }
+}
 .paper-head-div {
   display: flex;
   justify-content: space-between;
@@ -422,7 +452,7 @@
 }
 
 .paper-single-div {
-  height: 160px;
+  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -431,7 +461,21 @@
   box-shadow: 0 0 0.5rem #e4e4e4;
   border-radius: 3px;
 }
-
+@media (max-width: 1300px) {
+  .paper-img-div {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 780px) {
+  .paper-single-div img {
+    width: 150px;
+  }
+}
+@media (max-width: 540px) {
+  .paper-img-div {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 .data-input-fields {
   display: flex;
   justify-content: center;
@@ -464,14 +508,16 @@
   padding: 0 10px;
   transform: scale(1.2);
 }
-
+.raally {
+  width: 400%;
+  position: relative;
+}
 .rallyPermission-bg {
   flex: 1;
   background-image: url("./assets/images/5590822\ 2.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 400%;
   height: 80vh;
   border-radius: 5px;
   position: relative;
@@ -484,6 +530,19 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+@media (max-width: 1300px) {
+  .raally {
+    width: 300%;
+  }
+  .rallyImg img {
+    width: 60vh;
+  }
+}
+@media (max-width: 550px) {
+  .raally {
+    width: 200%;
+  }
 }
 .rallyImg img {
   width: 80vh;
@@ -515,12 +574,13 @@
     height: 35vh;
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 570px) {
   .rallyImg img {
     width: 30vh;
     height: 30vh;
   }
 }
+
 .policyPoster {
   width: 100%;
   height: 25vh;
@@ -605,6 +665,14 @@
   box-shadow: 0 0 1rem #beb2b2;
 }
 
+
+@media screen and (max-width: 780px) {
+  .dash-cont {
+    width: calc(100%);
+  }
+}
+
+
 .dash-cont-p {
   background-color: #f76c24;
   padding: 10px 0;
@@ -645,44 +713,45 @@ tbody .fc-scrollgrid-sync-inner a {
   color: #6b705c;
 }
 
-
 .email-form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 0px auto 0;
-}
-.email-content-container {
   position: relative;
-  width: 160vh;
+  width: 100%;
+  max-width: 160vh;
   height: auto;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(83, 82, 82, 0.5); 
+  box-shadow: 0 0 10px rgba(83, 82, 82, 0.5);
 }
-@media (max-width: 1400px) {
-  .email-content-container {
-    width: 110%;
-  }
-  .email-form {
-    margin: 10px auto 0;
-  }
-  }
+/* .email-content-container {
+  position: relative;
+  width: 100%; 
+  max-width: 160vh; 
+    height: auto;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(83, 82, 82, 0.5);
+} */
+
 .email-content {
- padding: 5px 30px;
+  padding: 5px 30px;
 }
-.email-field{
+.email-field {
   width: 100%;
 }
-.emailHeader{
-  background-color:#f76c24 ;
+.emailHeader {
+  background-color: #f76c24;
   color: #fff;
   padding: 10px;
   font-size: 15px;
 }
 
-.email-button{
+.email-button {
   padding: 0 30px;
 }
 
@@ -695,9 +764,7 @@ tbody .fc-scrollgrid-sync-inner a {
   color: white;
   border: none;
   margin-top: 20px;
-
 }
-
 
 #form-header-popup {
   font-family: "Montserrat", sans-serif;
@@ -726,11 +793,11 @@ tbody .fc-scrollgrid-sync-inner a {
   overflow: hidden;
 }
 
-.campaign-cards{
+.campaign-cards {
   display: flex;
   justify-content: space-evenly;
 }
-.campaign-card{
+.campaign-card {
   text-transform: uppercase;
   background-image: linear-gradient(rgba(242, 101, 34, 1), rgb(5, 2, 0));
   color: white;
@@ -743,21 +810,97 @@ tbody .fc-scrollgrid-sync-inner a {
   border-radius: 5px;
   cursor: pointer;
 }
-.campaign-card:hover{
-  background-image: linear-gradient( rgb(5, 2, 0), rgba(242, 101, 34, 1));
+@media (max-width: 1400px) {
+  .campaign-card {
+    width: 200px;
+  }
 }
-.campaign-add-btn{
+@media (max-width: 900px) {
+  .campaign-card {
+    width: 160px;
+  }
+}
+@media (max-width: 680px) {
+  .campaign-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+  .campaign-card {
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+  }
+}
+@media (max-width: 560px) {
+  .campaign-card {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+  }
+}
+@media (max-width: 460px) {
+  .campaign-cards {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1rem;
+  }
+  .campaign-card {
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+  }
+}
+.campaign-card:hover {
+  background-image: linear-gradient(rgb(5, 2, 0), rgba(242, 101, 34, 1));
+}
+.campaign-add-btn {
   text-align: end;
   margin-right: 30px;
 }
-.log-btn{
+.log-btn {
   background-color: rgba(255, 255, 255, 0.467);
   border: none;
   border-radius: 3px;
   padding: 5px 25px;
 }
-.log-btn:hover{
+.log-btn:hover {
   background-color: rgba(249, 5, 5, 0.467);
   color: white;
   border: 1px solid rgba(0, 0, 0, 0.242);
 }
+
+.confirmation{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  top: 0;
+  left: 0;
+  z-index: 99999999999999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.confirmation-popup{
+  width: 500px;
+  position: fixed;
+  z-index: 99999999;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  background-color: white;
+  height: auto;
+  top: 50%;
+  padding: 20px;
+}
+
+@media(max-width:525px){
+  .confirmation-popup{
+    height: auto;
+    width: auto;
+  }
+}
+

@@ -28,6 +28,7 @@ export default function PopulationInsights() {
               </div>
             </div>
             <div className="paper-img-div">
+            <div className="raally">
               <div className="rallyPermission-bg">
                 <div className="rallyPoster">
                   <div className="rallyImg">
@@ -53,6 +54,7 @@ export default function PopulationInsights() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

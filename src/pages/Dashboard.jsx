@@ -30,7 +30,7 @@ const Dashboard = () => {
   const handleInputChange = (event) => {
     setNewEventTitle(event.target.value);
   };
-
+  console.log("adta", newEventTitle);
   const handleEventCreate = () => {
     // Implement logic to create or update event
     setModalIsOpen(false);

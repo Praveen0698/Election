@@ -5,6 +5,7 @@ import { LiaGreaterThanSolid } from "react-icons/lia";
 import { TextField, Button } from "@mui/material";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
 
 const Email = () => {
   const [navClick, setNavClick] = useState(false);
@@ -12,8 +13,8 @@ const Email = () => {
   const [attachments, setAttachments] = useState([]);
 
   const [formData, setFormData] = useState({
-    to: "",
-    cc: "",
+    to:[],
+    cc: [],
     subject: "",
     body: "",
     attachments: [],
@@ -46,12 +47,34 @@ const Email = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log(e) 
     e.preventDefault();
+    try {
+
+      const formDataToSend = new FormData();
+      formDataToSend.append("subject", formData.subject);
+      formDataToSend.append("body", formData.body);
+      formDataToSend.append("to", JSON.stringify(formData.to));
+      formDataToSend.append("cc", JSON.stringify(formData.cc));
+      attachments.forEach((attachment) => {
+        formDataToSend.append("file", attachment);
+      });
+      const response = await axios.post("http://13.201.88.48:7070/mail/send", formDataToSend, {headers: {
+        "Content-Type": "multipart/form-data",
+      },
+});
+      alert("Sent Successfully!!")
+      console.log("Response from server:", response.data);
+    } catch (error) {
+      alert("Please Check the Datail !!")
+      console.error("Error submitting email:", error);
+    }
   };
 
   console.log("formDta", formData);
   console.log("att", attachments);
+
   return (
     <div>
       <HeadDashboard
@@ -71,7 +94,7 @@ const Email = () => {
             </div>
           </div>
           <div className="paper-img-div" style={{ display: "flex" }}>
-            <form onSubmit="handleSubmit(event)" class="email-form">
+            <form onSubmit={handleSubmit} class="email-form">
               <div className="email-content-container">
                 <div className="emailHeader">New Message</div>
                 <div className="email-content">
@@ -82,6 +105,7 @@ const Email = () => {
                     type="email"
                     variant="standard"
                     name="to"
+                    value={formData.to}
                     onChange={(e) => handleInputChange(e)}
                   />
                   <TextField
@@ -91,6 +115,7 @@ const Email = () => {
                     type="text"
                     variant="standard"
                     name="cc"
+                    value={formData.cc}
                     onChange={(e) => handleInputChange(e)}
                   />
                   <TextField
@@ -100,6 +125,7 @@ const Email = () => {
                     type="text"
                     variant="standard"
                     name="subject"
+                    value={formData.subject}
                     onChange={(e) => handleInputChange(e)}
                   />
 
@@ -112,6 +138,7 @@ const Email = () => {
                     maxRows={4}
                     rows={10}
                     name="body"
+                    value={formData.body}
                     onChange={(e) => handleInputChange(e)}
                   />
                 </div>

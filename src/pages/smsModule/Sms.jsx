@@ -63,10 +63,10 @@ const Sms = () => {
         <Sidebar navClick={navClick} side={side} />
         <div className="dashboard">
           <div className="paper-head-div">
-            <p style={{ margin: "0" }}>Write Email</p>
+            <p style={{ margin: "0" }}>Write SMS</p>
             <div>
-              <span>Email</span> <LiaGreaterThanSolid />{" "}
-              <span style={{ color: "#f26522" }}>Write Email</span>
+              <span>Bulk SMS</span> <LiaGreaterThanSolid />{" "}
+              <span style={{ color: "#f26522" }}>Write SMS</span>
             </div>
           </div>
           <div className="paper-img-div" style={{ display: "flex" }}>

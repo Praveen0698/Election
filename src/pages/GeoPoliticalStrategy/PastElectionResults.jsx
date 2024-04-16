@@ -29,6 +29,7 @@ export default function PastElectionResults() {
               </div>
             </div>
             <div className="paper-img-div">
+            <div className="raally">
               <div className="rallyPermission-bg">
                 <div className="rallyPoster">
                   <div className="pastResult">
@@ -57,6 +58,7 @@ export default function PastElectionResults() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

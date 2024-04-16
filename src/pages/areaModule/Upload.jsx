@@ -8,11 +8,13 @@ import "../../Map.css";
 import { Button, Modal, Box, TextField } from "@mui/material";
 import exifr from "exifr";
 import { MenuItem } from "@mui/material";
+import axios from "axios";
 
 const Upload = () => {
   const [open, setOpen] = useState(false);
   const [placeName, setPlaceName] = useState("");
   const [coordinates, setCoordinates] = useState(null);
+  const [geoGot, setGeoGot] = useState([]);
 
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
@@ -51,6 +53,16 @@ const Upload = () => {
   const [selectedPlace, setSelectedPlace] = useState("");
   const [selectedArea, setSelectedArea] = useState([85.9169226, 21.502322]);
   const [zommArea, setZoomArea] = useState(8);
+  const [formdata, setFormData] = useState({
+    featuresid: 1,
+    properties: {
+      title: "",
+    },
+    geometry: {
+      type: "Point",
+      coordinates: [0, 0],
+    },
+  });
 
   const jsonData = {
     type: "FeatureCollection",
@@ -223,6 +235,21 @@ const Upload = () => {
     setSelectedPlace(event.target.value);
   };
 
+  useEffect(() => {
+    setFormData({
+      featuresid: 1,
+      properties: {
+        title: placeName,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [longitude, latitude],
+      },
+    });
+  }, [placeName, selectedArea]);
+
+
+
   const handleUpload = async () => {
     setGeoJson({
       features: [
@@ -240,8 +267,31 @@ const Upload = () => {
       type: "FeatureCollection",
     });
 
+    await axios
+      .post("http://13.201.88.48:7070/api/featurecollection/create", formdata)
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
+
     setOpen(false);
   };
+
+  const getGeoData = async () => {
+    await axios
+      .get("http://13.201.88.48:7070/api/featurecollection/features/1")
+      .then((res) => {
+        setGeoJson({
+          features: res.data,
+          type: "FeatureCollection",
+        });
+      })
+      .catch((err) => console.error(err));
+  };
+
+
+
+  useEffect(() => {
+    getGeoData();
+  }, []);
 
   const mapContainerRef = useRef(null);
   const [longitude, setLongitude] = useState(0);
@@ -288,12 +338,6 @@ const Upload = () => {
                 "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
                 "text-offset": [0, 1.25],
                 "text-anchor": "top",
-                "icon-size": 1, // Adjust icon size if needed
-                "icon-allow-overlap": true, // Allow icons to overlap
-                "marker-color": "#ff0000", // Set marker color to red
-              },
-              paint: {
-                "icon-color": "#ff0000", // Change marker color here
               },
             });
           }
@@ -317,10 +361,10 @@ const Upload = () => {
         <Sidebar navClick={navClick} side={side} />
         <div className="dashboard">
           <div className="paper-head-div">
-            <p style={{ margin: "0" }}>All Districts</p>
+            <p style={{ margin: "0" }}>Image Location</p>
             <div>
               <span>Area </span> <LiaGreaterThanSolid />{" "}
-              <span style={{ color: "#f26522" }}>All Districts</span>
+              <span style={{ color: "#f26522" }}>Image Location</span>
             </div>
           </div>
           <div

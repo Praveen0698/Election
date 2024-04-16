@@ -28,6 +28,7 @@ export default function PolicyIniatives() {
               </div>
             </div>
             <div className="paper-img-div">
+            <div className="raally">
               <div className="rallyPermission-bg">
                 <div className="rallyPoster">
                   <div className="policyPoster">
@@ -55,6 +56,7 @@ export default function PolicyIniatives() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

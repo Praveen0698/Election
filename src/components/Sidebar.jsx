@@ -57,6 +57,7 @@ const Sidebar = ({ side, navClick }) => {
     <div
       className="sidebar"
       style={{
+        zIndex:"100",
         position: "relative",
         left:
           window.innerWidth < 1200 ? (side ? "" : "-400px") : side ? "" : "",

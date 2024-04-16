@@ -17,13 +17,13 @@ const Alldistricts = () => {
     features: [
       {
         type: "Feature",
-        properties: {
-          title: "Keonjhar Town",
-          // Add other properties as needed
-        },
         geometry: {
           type: "Point",
           coordinates: [85.5841, 21.6344], // Longitude and latitude of Keonjhar Town
+        },
+        properties: {
+          title: "Keonjhar Town",
+          // Add other properties as needed
         },
       },
       {
@@ -209,12 +209,6 @@ const Alldistricts = () => {
                 "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
                 "text-offset": [0, 1.25],
                 "text-anchor": "top",
-                "icon-size": 1, // Adjust icon size if needed
-                "icon-allow-overlap": true, // Allow icons to overlap
-                "marker-color": "#ff0000", // Set marker color to red
-              },
-              paint: {
-                "icon-color": "#ff0000", // Change marker color here
               },
             });
           }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Sidebar";
 import HeadDashboard from "../../components/HeadDashboard";
 import { LiaGreaterThanSolid } from "react-icons/lia";
@@ -15,8 +15,17 @@ import {
   tablePaginationClasses as classes,
 } from "@mui/base/TablePagination";
 import { styled } from "@mui/system";
+import axios from "axios";
+import { AiOutlineDelete } from "react-icons/ai";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddAnalysis = () => {
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [toastClass, setToastClass] = useState("")
+  const showToastMessage = () => {
+    toast.success("Success Notification !");
+  };
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(25);
@@ -64,23 +73,37 @@ const AddAnalysis = () => {
       gap: 0rem;
     }
   `;
-
   const [navClick, setNavClick] = useState(false);
   const [side, setSide] = useState(false);
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    note: "",
-  });
-
-  const [card, setCard] = useState("strength");
+  const [card, setCard] = useState("strengths");
+  const [formData, setFormData] = useState(
+    card === "strengths"
+      ? {
+          strength: "",
+          note: "",
+        }
+      : card === "weakness"
+      ? {
+          weakness: "",
+          note: "",
+        }
+      : card === "opportunities"
+      ? {
+          opportunity: "",
+          note: "",
+        }
+      : {
+          threat: "",
+          note: "",
+        }
+  );
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleOpen = () => {
@@ -91,118 +114,56 @@ const AddAnalysis = () => {
     setOpen(false);
   };
 
-  const strength = [
-    {
-      strength: "Confidence",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      strength: "Confidence",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      strength: "Confidence",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      strength: "Confidence",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      strength: "Confidence",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-  ];
-  const weakness = [
-    {
-      weakness: "weakness",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      weakness: "weakness",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      weakness: "weakness",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      weakness: "weakness",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      weakness: "weakness",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-  ];
-  const opportunities = [
-    {
-      opportunities: "opportunities",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      opportunities: "opportunities",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      opportunities: "opportunities",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      opportunities: "opportunities",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      opportunities: "opportunities",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-  ];
-  const threat = [
-    {
-      threat: "threat",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      threat: "threat",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      threat: "threat",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      threat: "threat",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-    {
-      threat: "threat",
-      note: "Election jeetne kaa",
-      options: "Option nahi rakhne ka, jeetne ka bas",
-    },
-  ];
+  const [voter, setVoter] = useState([]);
 
-  const [voter, setVoter] = useState(strength);
+  useEffect(() => {
+    getData();
+  },[card]);
 
-  console.log("formdata", formData);
+  const getData = async () => {
+    try {
+      const response = await axios.get(`http://13.201.88.48:7070/${card}`);
+      setVoter(response.data);
+    } catch (error) {
+      console.error("Error getting data", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `http://13.201.88.48:7070/${card}`,
+        formData
+      );
+      toast.success("Submitted Successfully !");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (error) {
+      toast.error("Submission Failed !");
+      console.error("Post failed", error);
+    }
+  };
+
+  const [rec, setRec] = useState('');
+
+  useEffect(() => {
+    handleDelete();
+  }, [rec])
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://13.201.88.48:7070/${card}/${rec}`)
+      toast.success("Deleted Successfully !");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.error("Delete failed", error);  
+    }
+  }
+  
 
   const renderCompanyData = () => {
     return (
@@ -225,6 +186,9 @@ const AddAnalysis = () => {
 
   return (
     <div>
+    <ToastContainer autoClose={2000}
+        position="top-center" className={toastClass}
+        toastClassName="dark-toast"/>
       <HeadDashboard
         navClick={navClick}
         setNavClick={setNavClick}
@@ -241,10 +205,54 @@ const AddAnalysis = () => {
             </div>
           </div>
           <div className="campaign-cards">
-            <div className="campaign-card" onClick={()=>{setCard("strength"); setVoter(strength); setFormData({...formData, name:"", note:""})}}>Strength</div>
-            <div className="campaign-card" onClick={()=>{setCard("weakness"); setVoter(weakness); setFormData({...formData, name:"", note:""})}}>Weakness</div>
-            <div className="campaign-card" onClick={()=>{setCard("opportunities"); setVoter(opportunities); setFormData({...formData, name:"", note:""})}}>Opportunities</div>
-            <div className="campaign-card" onClick={()=>{setCard("threat"); setVoter(threat); setFormData({...formData, name:"", note:""})}}>Threat</div>
+            <div
+              className="campaign-card"
+              onClick={() => {
+                setCard("strengths");
+                setFormData({
+                  strength: "",
+                  note: "",
+                });
+              }}
+            >
+              Strength
+            </div>
+            <div
+              className="campaign-card"
+              onClick={() => {
+                setCard("weaknesses");
+                setFormData({
+                  weakness: "",
+                  note: "",
+                });
+              }}
+            >
+              Weakness
+            </div>
+            <div
+              className="campaign-card"
+              onClick={() => {
+                setCard("opportunities");
+                setFormData({
+                  opportunity: "",
+                  note: "",
+                });
+              }}
+            >
+              Opportunities
+            </div>
+            <div
+              className="campaign-card"
+              onClick={() => {
+                setCard("threats");
+                setFormData({
+                  threat: "",
+                  note: "",
+                });
+              }}
+            >
+              Threat
+            </div>
           </div>
           <div className="campaign-add-btn">
             <Button
@@ -257,7 +265,7 @@ const AddAnalysis = () => {
             >
               <div className="add">
                 <MdAdd />
-                ADD <span style={{textTransform:"uppercase"}}>{card}</span>
+                ADD <span style={{ textTransform: "uppercase" }}>{card}</span>
               </div>
             </Button>
           </div>
@@ -272,35 +280,59 @@ const AddAnalysis = () => {
               </tr>
             </thead>
             <tbody>
-              {voter.length === 0 ? (
-                renderCompanyData()
-              ) : (
-                (rowsPerPage > 0
-                  ? voter.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : voter
-                )
-                  .filter((elem) => {
-                    if (search.length === 0) return elem;
-                    return (
-                      elem.strength
-                        .toLowerCase()
-                        .includes(search.toLowerCase()) ||
-                      elem.note.toLowerCase().includes(search.toLowerCase()) ||
-                      elem.options.toLowerCase().includes(search.toLowerCase())
-                    );
-                  })
-                  .map((data, index) => (
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td>{card==="strength"?data.strength:card==="weakness"?data.weakness:card==="opportunities"?data.opportunities:data.threat}</td>
-                      <td>{data.note}</td>
-                      <td>{data.options}</td>
-                    </tr>
-                  ))
-              )}
+              {voter.length === 0
+                ? renderCompanyData()
+                : (rowsPerPage > 0
+                    ? voter.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : voter
+                  )
+                    .filter((elem) => {
+                      if (search.length === 0) return elem;
+                      return (
+                        elem.strength
+                          .toLowerCase()
+                          .includes(search.toLowerCase()) ||
+                        elem.note
+                          .toLowerCase()
+                          .includes(search.toLowerCase()) ||
+                        elem.options
+                          .toLowerCase()
+                          .includes(search.toLowerCase())
+                      );
+                    })
+                    .map((data, index) => (
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>
+                          {card === "strengths"
+                            ? data.strength
+                            : card === "weaknesses"
+                            ? data.weakness
+                            : card === "opportunities"
+                            ? data.opportunity
+                            : data.threat}
+                        </td>
+                        <td>{data.note}</td>
+                        <td
+                          className="text-center fs-5"
+                          style={{ color: "red", cursor: "pointer" }}
+                          onClick={()=>
+                            card === "strengths"
+                              ? setRec(data.strengthId)
+                              : card === "weaknesses"
+                              ? setRec(data.weaknessId)
+                              : card === "opportunities"
+                              ? setRec(data.opportunityId)
+                              : setRec(data.threatId)
+                          }
+                        >
+                          <AiOutlineDelete/>
+                        </td>
+                      </tr>
+                    ))}
             </tbody>
             <tfoot>
               <tr>
@@ -337,13 +369,28 @@ const AddAnalysis = () => {
               <form style={{ width: "100%" }}>
                 <div className="data-input-fields">
                   <TextField
-                    id="name"
                     margin="dense"
                     label="Name"
                     fullWidth
-                    value={formData.name}
+                    value={
+                      card === "strengths"
+                        ? formData.strength
+                        : card === "weaknesses"
+                        ? formData.weakness
+                        : card === "opportunities"
+                        ? formData.opportunity
+                        : formData.threat
+                    }
                     onChange={(e) => handleInputChange(e)}
-                    name="name"
+                    name={
+                      card === "strengths"
+                        ? "strength"
+                        : card === "weaknesses"
+                        ? "weakness"
+                        : card === "opportunities"
+                        ? "opportunity"
+                        : "threat"
+                    }
                   />
                 </div>
                 <div className="data-input-fields">
@@ -363,7 +410,7 @@ const AddAnalysis = () => {
                     id="input-btn-submit"
                     className="submit"
                     type="submit"
-                    // onClick={()}
+                    onClick={(e) => handleSubmit(e)}
                     variant="outlined"
                     style={{ width: "max-content", height: "40px" }}
                   >
@@ -374,6 +421,23 @@ const AddAnalysis = () => {
             </DialogContent>
           </Dialog>
         </div>
+        {showDeleteConfirmation && (
+        <div className="confirmation">
+          <div className="confirmation-popup d-flex align-items-center justify-content-center">
+            <div>
+              <p className="fs-4 fw-bold">Are you sure you want to delete this item?</p>
+              <div className="d-flex" style={{ gap: "10px" }}>
+                <Button id="input-btn-submit" style={{width:'100%'}} onClick={confirmDelete} variant="contained">
+                  Yes
+                </Button>
+                <Button id="input-btn-cancel" style={{width:'100%'}} onClick={cancelDelete} variant="outlined">
+                  No
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       </div>
     </div>
   );
