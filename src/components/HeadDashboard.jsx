@@ -16,11 +16,11 @@ const HeadDashboard = ({ side, setSide, navClick, setNavClick }) => {
                 onClick={() => setNavClick(!navClick)}
                 className="ham-icon"
               >
-                 <span className="hamburger-icon" onClick={() => setSide(!side)}>
+                <span className="hamburger-icon" onClick={() => setSide(!side)}>
                   <span className="line" />
                   <span className="line" />
                   <span className="line" />
-                  </span>
+                </span>
               </button>
 
               <a
@@ -32,18 +32,19 @@ const HeadDashboard = ({ side, setSide, navClick, setNavClick }) => {
                 className="ham-icon"
                 style={{ border: "2px solid red" }}
               >
-                 <span className="hamburger-icon" onClick={() => setSide(!side)}>
+                <span className="hamburger-icon" onClick={() => setSide(!side)}>
                   <span className="line" />
                   <span className="line" />
                   <span className="line" />
-  </span>
+                </span>
               </button>
             </div>
           </div>
           <div className="head-icons mx-5">
-            <img src={notification} alt="" />
+            {/* <img src={notification} alt="" />
             <img src={setting} alt="" />
-            <img src={profile} alt="" />
+            <img src={profile} alt="" /> */}
+            <button className="log-btn">Logout</button>
           </div>
         </div>
       </div>

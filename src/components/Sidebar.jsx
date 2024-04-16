@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import dashboard from "../assets/dashboard.png";
 import post from "../assets/post.png";
 import voter from "../assets/voter.png";
+import areas from "../assets/images/Areas.png";
 import video from "../assets/video-marketing.png";
+import volunteer from '../assets/images/Volunteer.png'
 import social from "../assets/social-media.png";
-import target from "../assets/target-audience.png";
+import campaign from "../assets/images/megaphone 1.png";
+import sms from "../assets/images/SMS.png";
+import email from "../assets/images/Email.png";
 import chat from "../assets/chat.png";
 import credit from "../assets/credit-card.png";
 import data from "../assets/data.png";
@@ -83,7 +87,7 @@ const Sidebar = ({ side, navClick }) => {
         <li className="sidebar-list" onClick={toggleArea}>
           <div className="sidebar-content">
             <img
-              src={voter}
+              src={areas}
               alt=""
               style={{
                 height: navClick ? "35px" : "",
@@ -118,7 +122,7 @@ const Sidebar = ({ side, navClick }) => {
         <li className="sidebar-list" onClick={() => navigation("/volunteers")}>
           <div className="sidebar-content">
             <img
-              src={video}
+              src={volunteer}
               alt=""
               style={{
                 height: navClick ? "35px" : "",
@@ -212,7 +216,7 @@ const Sidebar = ({ side, navClick }) => {
         >
           <div className="sidebar-content">
             <img
-              src={target}
+              src={campaign}
               alt=""
               style={{
                 height: navClick ? "40px" : "",
@@ -264,7 +268,7 @@ const Sidebar = ({ side, navClick }) => {
         >
           <div className="sidebar-content">
             <img
-              src={video}
+              src={sms}
               alt=""
               style={{
                 height: navClick ? "35px" : "",
@@ -282,7 +286,7 @@ const Sidebar = ({ side, navClick }) => {
         >
           <div className="sidebar-content">
             <img
-              src={video}
+              src={email}
               alt=""
               style={{
                 height: navClick ? "35px" : "",

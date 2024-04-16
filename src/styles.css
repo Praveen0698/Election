@@ -645,57 +645,59 @@ tbody .fc-scrollgrid-sync-inner a {
   color: #6b705c;
 }
 
-.email-btn {
-  background-color: #f76c24;
-  color: white;
-  padding: 5px 15px;
-  border: none;
-  margin-top: 20px;
-}
 
 .email-form {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 40px auto 0;
+  margin: 0px auto 0;
 }
 .email-content-container {
   position: relative;
-  width: 600px;
-  height: 300px;
-  margin-bottom: 10px;
-}
-.email-content {
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
+  width: 160vh;
+  height: auto;
+  overflow-y: scroll;
+  background-color: #fff;
   border-radius: 5px;
-  resize: none;
-  outline: none;
-  position: absolute;
-  top: 0;
-  left: 0;
+  box-shadow: 0 0 10px rgba(83, 82, 82, 0.5); 
 }
-.email-placeholder {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  pointer-events: none;
-  color: #999;
-  transition: all 0.3s ease;
+@media (max-width: 1400px) {
+  .email-content-container {
+    width: 110%;
+  }
+  .email-form {
+    margin: 10px auto 0;
+  }
+  }
+.email-content {
+ padding: 5px 30px;
 }
-.email-content:focus + .email-placeholder,
-.email-content:not(:placeholder-shown) + .email-placeholder {
-  transform: translateY(-30px);
-  font-size: 12px;
-  color: #555;
+.email-field{
+  width: 100%;
+}
+.emailHeader{
+  background-color:#f76c24 ;
+  color: #fff;
+  padding: 10px;
+  font-size: 15px;
 }
 
-.email-btn:hover {
-  background-color: #f76c24;
+.email-button{
+  padding: 0 30px;
 }
+
+.email-btn {
+  background-color: #f76c24;
+  border-radius: 5px;
+  width: 140px;
+  height: 40px;
+  margin-bottom: 20px;
+  color: white;
+  border: none;
+  margin-top: 20px;
+
+}
+
 
 #form-header-popup {
   font-family: "Montserrat", sans-serif;
@@ -722,4 +724,40 @@ tbody .fc-scrollgrid-sync-inner a {
 
 .css-ypiqx9-MuiDialogContent-root {
   overflow: hidden;
+}
+
+.campaign-cards{
+  display: flex;
+  justify-content: space-evenly;
+}
+.campaign-card{
+  text-transform: uppercase;
+  background-image: linear-gradient(rgba(242, 101, 34, 1), rgb(5, 2, 0));
+  color: white;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  width: 250px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.campaign-card:hover{
+  background-image: linear-gradient( rgb(5, 2, 0), rgba(242, 101, 34, 1));
+}
+.campaign-add-btn{
+  text-align: end;
+  margin-right: 30px;
+}
+.log-btn{
+  background-color: rgba(255, 255, 255, 0.467);
+  border: none;
+  border-radius: 3px;
+  padding: 5px 25px;
+}
+.log-btn:hover{
+  background-color: rgba(249, 5, 5, 0.467);
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.242);
 }
