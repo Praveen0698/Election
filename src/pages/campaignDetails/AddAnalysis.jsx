@@ -17,12 +17,12 @@ import {
 import { styled } from "@mui/system";
 import axios from "axios";
 import { AiOutlineDelete } from "react-icons/ai";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddAnalysis = () => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [toastClass, setToastClass] = useState("")
+  const [toastClass, setToastClass] = useState("");
   const showToastMessage = () => {
     toast.success("Success Notification !");
   };
@@ -118,7 +118,7 @@ const AddAnalysis = () => {
 
   useEffect(() => {
     getData();
-  },[card]);
+  }, [card]);
 
   const getData = async () => {
     try {
@@ -146,24 +146,23 @@ const AddAnalysis = () => {
     }
   };
 
-  const [rec, setRec] = useState('');
+  const [rec, setRec] = useState("");
 
   useEffect(() => {
     handleDelete();
-  }, [rec])
+  }, [rec]);
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://13.201.88.48:7070/${card}/${rec}`)
+      await axios.delete(`http://13.201.88.48:7070/${card}/${rec}`);
       toast.success("Deleted Successfully !");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
     } catch (error) {
-      console.error("Delete failed", error);  
+      console.error("Delete failed", error);
     }
-  }
-  
+  };
 
   const renderCompanyData = () => {
     return (
@@ -186,9 +185,12 @@ const AddAnalysis = () => {
 
   return (
     <div>
-    <ToastContainer autoClose={2000}
-        position="top-center" className={toastClass}
-        toastClassName="dark-toast"/>
+      <ToastContainer
+        autoClose={2000}
+        position="top-center"
+        className={toastClass}
+        toastClassName="dark-toast"
+      />
       <HeadDashboard
         navClick={navClick}
         setNavClick={setNavClick}
@@ -319,7 +321,7 @@ const AddAnalysis = () => {
                         <td
                           className="text-center fs-5"
                           style={{ color: "red", cursor: "pointer" }}
-                          onClick={()=>
+                          onClick={() =>
                             card === "strengths"
                               ? setRec(data.strengthId)
                               : card === "weaknesses"
@@ -329,7 +331,7 @@ const AddAnalysis = () => {
                               : setRec(data.threatId)
                           }
                         >
-                          <AiOutlineDelete/>
+                          <AiOutlineDelete />
                         </td>
                       </tr>
                     ))}
@@ -422,22 +424,32 @@ const AddAnalysis = () => {
           </Dialog>
         </div>
         {showDeleteConfirmation && (
-        <div className="confirmation">
-          <div className="confirmation-popup d-flex align-items-center justify-content-center">
-            <div>
-              <p className="fs-4 fw-bold">Are you sure you want to delete this item?</p>
-              <div className="d-flex" style={{ gap: "10px" }}>
-                <Button id="input-btn-submit" style={{width:'100%'}} onClick={confirmDelete} variant="contained">
-                  Yes
-                </Button>
-                <Button id="input-btn-cancel" style={{width:'100%'}} onClick={cancelDelete} variant="outlined">
-                  No
-                </Button>
+          <div className="confirmation">
+            <div className="confirmation-popup d-flex align-items-center justify-content-center">
+              <div>
+                <p className="fs-4 fw-bold">
+                  Are you sure you want to delete this item?
+                </p>
+                <div className="d-flex" style={{ gap: "10px" }}>
+                  <Button
+                    id="input-btn-submit"
+                    style={{ width: "100%" }}
+                    variant="contained"
+                  >
+                    Yes
+                  </Button>
+                  <Button
+                    id="input-btn-cancel"
+                    style={{ width: "100%" }}
+                    variant="outlined"
+                  >
+                    No
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </div>
   );

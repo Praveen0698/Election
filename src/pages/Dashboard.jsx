@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import HeadDashboard from "../components/HeadDashboard";
-
+import axios from "axios";
 import "../Map.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -14,11 +14,25 @@ const Dashboard = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [newEventTitle, setNewEventTitle] = useState("");
-  const [events, setEvents] = useState([]); // Define events state
+  const [selectedPlace, setSelectedPlace] = useState("");
+  const [updateDate, setUpdateDate] = useState();
+  const [events, setEvents] = useState([
+    {
+      title: "hjc",
+      date: "2024-04-18",
+    },
+  ]);
 
   const handleEventClick = (info) => {
     setSelectedEvent(info.event);
+    const dateString = info.event._instance.range.start;
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Month is zero-based, so we add 1
+    const day = date.getDate().toString().padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+    setUpdateDate(formattedDate);
     setModalIsOpen(true);
   };
 
@@ -27,32 +41,65 @@ const Dashboard = () => {
     setModalIsOpen(true);
   };
 
-  const handleInputChange = (event) => {
-    setNewEventTitle(event.target.value);
+  const [formData, setFormData] = useState({
+    date: "",
+    title: "",
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+      date: selectedDate,
+    });
+    setSelectedPlace(e.target.value);
   };
-  console.log("adta", newEventTitle);
-  const handleEventCreate = () => {
-    // Implement logic to create or update event
+
+  const handleEventCreate = () => {};
+  const handleEventSave = async () => {
+    if (selectedEvent) {
+      await axios.put(
+        `http://13.201.88.48:7070/events/${selectedEvent._def.extendedProps.eventId}`,
+        { title: selectedPlace, date: updateDate }
+      );
+    } else {
+      await axios.post("http://13.201.88.48:7070/events", formData);
+    }
     setModalIsOpen(false);
+  };
+
+  const getEvent = async () => {
+    await axios
+      .get("http://13.201.88.48:7070/events")
+      .then((res) => setEvents(res.data))
+      .catch((err) => console.error(err));
   };
 
   const closeModal = () => {
+    setSelectedEvent(null);
     setModalIsOpen(false);
   };
 
-  const handleDayRender = (info) => {
-    info.el.style.color = "orange";
+  const handleDelete = async () => {
+    await axios.delete(
+      `http://13.201.88.48:7070/events/${selectedEvent._def.extendedProps.eventId}`
+    );
+    setModalIsOpen(false);
+    // getEvent();
   };
 
-  const handleViewRender = (info) => {
-    const dayHeaderCells = document.querySelectorAll(".fc-day-header");
-    dayHeaderCells.forEach((cell) => {
-      const dayOfWeek = cell.getAttribute("data-date");
-      if (["2022-01-03", "2022-01-04"].includes(dayOfWeek)) {
-        cell.style.backgroundColor = "gray";
-      }
-    });
+  const [getVolunterr, setGetVolunteer] = useState([]);
+  const handleVolunteer = async () => {
+    await axios
+      .get("http://13.201.88.48:7070/volunteers/get/volunteers")
+      .then((res) => setGetVolunteer(res.data))
+      .catch((err) => console.error(err));
   };
+
+  useEffect(() => {
+    handleVolunteer();
+    getEvent();
+  }, []);
 
   return (
     <div>
@@ -76,21 +123,21 @@ const Dashboard = () => {
             <div className="dash-cont">
               <p className="dash-cont-p">Volunteer</p>
               <div className="dash-cont-child">
-                <span className="dash-cont-span">1</span>
+                <span className="dash-cont-span">{getVolunterr.length}</span>
                 <p className="dash-cont-child-p">Volunteer</p>
               </div>
             </div>
             <div className="dash-cont">
               <p className="dash-cont-p">Event</p>
               <div className="dash-cont-child">
-                <span>1</span>
+                <span>{events.length}</span>
                 <p>Event</p>
               </div>
             </div>
             <div className="dash-cont">
               <p className="dash-cont-p">Areas</p>
               <div className="dash-cont-child">
-                <span className="dash-cont-span">1</span>
+                <span className="dash-cont-span">13</span>
                 <p className="dash-cont-child-p">Areas</p>
               </div>
             </div>
@@ -118,12 +165,10 @@ const Dashboard = () => {
                     editable={true}
                     eventLimit={true}
                     selectable={true}
-                    events={events} // Pass events state to FullCalendar
+                    events={events}
                     eventClick={handleEventClick}
                     dateClick={handleDateClick}
-                    height={520}
-                    dayRender={handleDayRender}
-                    viewRender={handleViewRender}
+                    height={500}
                   />
                   <Modal
                     isOpen={modalIsOpen}
@@ -131,8 +176,8 @@ const Dashboard = () => {
                     contentLabel="Event Modal"
                     style={{
                       content: {
-                        width: "50%",
-                        height: "30%",
+                        width: "30%",
+                        height: "36%",
                         margin: "auto",
                       },
                       overlay: {
@@ -144,25 +189,28 @@ const Dashboard = () => {
                     <h2>{selectedEvent ? "Edit Event" : "Create New Event"}</h2>
                     {selectedDate && <p>Selected Date: {selectedDate}</p>}
                     <form onSubmit={handleEventCreate}>
-                      <label>
-                        Event Title:
+                      <label style={{ marginTop: "20px" }}>
                         <input
                           type="text"
-                          value={newEventTitle}
-                          onChange={handleInputChange}
+                          value={formData.title}
+                          name="title"
+                          onChange={(e) => handleInputChange(e)}
                           className="event-input"
+                          placeholder="Enter Event"
                         />
                       </label>
-                      <div className="data-buttons">
-                        <button
-                          onClick={handleEventCreate}
-                          id="input-btn-submit"
-                        >
-                          {selectedEvent ? "Update Event" : "Create Event"}
+                      <div className="data-buttons event-btns">
+                        <button onClick={handleEventSave} id="event-btn-submit">
+                          {selectedEvent ? "Update" : "Create "}
                         </button>
-                        <button onClick={closeModal} id="input-btn-cancel">
+                        <button onClick={closeModal} id="event-btn-cancel">
                           Cancel
                         </button>
+                        {selectedEvent ? (
+                          <button onClick={handleDelete} id="event-btn-delete">
+                            Delete
+                          </button>
+                        ) : null}
                       </div>
                     </form>
                   </Modal>
@@ -181,13 +229,16 @@ const Dashboard = () => {
                   <div className="event-list" key={index}>
                     <p
                       style={{
-                        background:
-                          event.className === "added-holiday-data"
-                            ? "#501a51"
-                            : "#f2711c",
+                        background: "#f2711c",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "0px 20px",
+                        color: "white",
                       }}
                     >
-                      {event.title} {event.start}
+                      {event.title}{" "}
+                      <span style={{ color: "black" }}>{event.date}</span>
                     </p>
                   </div>
                 ))}

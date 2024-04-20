@@ -323,7 +323,7 @@
   margin: 10px;
   padding: 0;
 }
-.dashboard-head-div{
+.dashboard-head-div {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -665,13 +665,11 @@
   box-shadow: 0 0 1rem #beb2b2;
 }
 
-
 @media screen and (max-width: 780px) {
   .dash-cont {
     width: calc(100%);
   }
 }
-
 
 .dash-cont-p {
   background-color: #f76c24;
@@ -873,7 +871,7 @@ tbody .fc-scrollgrid-sync-inner a {
   border: 1px solid rgba(0, 0, 0, 0.242);
 }
 
-.confirmation{
+.confirmation {
   position: fixed;
   height: 100%;
   width: 100%;
@@ -885,7 +883,7 @@ tbody .fc-scrollgrid-sync-inner a {
   justify-content: center;
   align-items: center;
 }
-.confirmation-popup{
+.confirmation-popup {
   width: 500px;
   position: fixed;
   z-index: 99999999;
@@ -897,10 +895,34 @@ tbody .fc-scrollgrid-sync-inner a {
   padding: 20px;
 }
 
-@media(max-width:525px){
-  .confirmation-popup{
+@media (max-width: 525px) {
+  .confirmation-popup {
     height: auto;
     width: auto;
   }
 }
 
+.event-btns {
+  margin-top: 40px;
+}
+
+#event-btn-submit,
+#event-btn-delete,
+#event-btn-cancel {
+  width: 120px;
+  height: 30px;
+  border-radius: 4px;
+  font-weight: 400;
+  background: #f26522;
+  color: #fff;
+  border: none;
+  margin-right: 10px;
+}
+
+#event-btn-cancel {
+  background: #ccc;
+}
+
+#event-btn-delete {
+  background-color: red;
+}

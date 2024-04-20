@@ -41,133 +41,120 @@ const Alldistricts = () => {
         type: "Feature",
         properties: {
           title: "Barbil",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.3799, 22.1181], // Longitude and latitude of Barbil
+          coordinates: [85.377147, 22.113337],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Joda",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.7819, 21.9477], // Longitude and latitude of Joda
+          coordinates: [85.4432931, 22.0182552],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Anandapur",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.1559, 21.1568], // Longitude and latitude of Anandapur
+          coordinates: [86.1231992, 21.2193378],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Banspal",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.7692, 21.1596], // Longitude and latitude of Banspal
+          coordinates: [85.3740698, 21.3941515],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Hatadihi",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.9755, 21.9746], // Longitude and latitude of Hatadihi
+          coordinates: [86.2653805, 21.2206495],
         },
       },
-      // Additional places
       {
         type: "Feature",
         properties: {
           title: "Champua",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.6366, 22.0835], // Longitude and latitude of Champua
+          coordinates: [85.6644773, 22.0651779],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Jhumpura",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.6844, 22.0653], // Longitude and latitude of Jhumpura
+          coordinates: [85.5706536, 21.8285855],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Patna",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.6162, 21.8659], // Longitude and latitude of Patna
+          coordinates: [85.5367878, 21.7516017],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Saharpada",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.5947, 21.6568], // Longitude and latitude of Saharpada
+          coordinates: [85.9457757, 21.7378716],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Ghasipura",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.5617, 21.8685], // Longitude and latitude of Ghasipura
+          coordinates: [86.1134576, 21.2121442],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Telkoi",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.9591, 21.0314], // Longitude and latitude of Telkoi
+          coordinates: [85.3938317, 21.3576152],
         },
       },
       {
         type: "Feature",
         properties: {
           title: "Harichandanpur",
-          // Add other properties as needed
         },
         geometry: {
           type: "Point",
-          coordinates: [85.8125, 21.4262], // Longitude and latitude of Harichandanpur
+          coordinates: [85.7917535, 21.3401886],
         },
       },
     ],
