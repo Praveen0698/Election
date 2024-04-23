@@ -12,12 +12,14 @@ const Email = () => {
   const [side, setSide] = useState(false);
   const [attachments, setAttachments] = useState([]);
 
+  const defaultFile = new File([], "default-file.txt", { type: "text/plain" });
+
   const [formData, setFormData] = useState({
     to: [],
     cc: [],
     subject: "",
     body: "",
-    file: [],
+    file: defaultFile,
   });
 
   const handleAttachmentChange = (event) => {
