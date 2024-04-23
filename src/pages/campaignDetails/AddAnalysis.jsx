@@ -206,6 +206,7 @@ const AddAnalysis = () => {
               <span style={{ color: "#f26522" }}></span>
             </div>
           </div>
+
           <div className="campaign-cards">
             <div
               className="campaign-card"
@@ -272,156 +273,158 @@ const AddAnalysis = () => {
             </Button>
           </div>
           <br />
-          <table id="table" className="table table-bordered table-hover">
-            <thead>
-              <tr className="" style={{ textTransform: "uppercase" }}>
-                <th>#</th>
-                <th>{card}</th>
-                <th>Note</th>
-                <th>Options</th>
-              </tr>
-            </thead>
-            <tbody>
-              {voter.length === 0
-                ? renderCompanyData()
-                : (rowsPerPage > 0
-                    ? voter.slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                    : voter
-                  )
-                    .filter((elem) => {
-                      if (search.length === 0) return elem;
-                      return (
-                        elem.strength
-                          .toLowerCase()
-                          .includes(search.toLowerCase()) ||
-                        elem.note
-                          .toLowerCase()
-                          .includes(search.toLowerCase()) ||
-                        elem.options
-                          .toLowerCase()
-                          .includes(search.toLowerCase())
-                      );
-                    })
-                    .map((data, index) => (
-                      <tr>
-                        <td>{index + 1}</td>
-                        <td>
-                          {card === "strengths"
-                            ? data.strength
-                            : card === "weaknesses"
-                            ? data.weakness
-                            : card === "opportunities"
-                            ? data.opportunity
-                            : data.threat}
-                        </td>
-                        <td>{data.note}</td>
-                        <td
-                          className="text-center fs-5"
-                          style={{ color: "red", cursor: "pointer" }}
-                          onClick={() =>
-                            card === "strengths"
-                              ? setRec(data.strengthId)
+          <div className="paper-head-div" style={{ flexDirection: "column" }}>
+            <table id="table" className="table table-bordered table-hover">
+              <thead>
+                <tr className="" style={{ textTransform: "uppercase" }}>
+                  <th>#</th>
+                  <th className="text-center">{card}</th>
+                  <th className="text-center">Note</th>
+                  <th className="text-center">Options</th>
+                </tr>
+              </thead>
+              <tbody>
+                {voter.length === 0
+                  ? renderCompanyData()
+                  : (rowsPerPage > 0
+                      ? voter.slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
+                      : voter
+                    )
+                      .filter((elem) => {
+                        if (search.length === 0) return elem;
+                        return (
+                          elem.strength
+                            .toLowerCase()
+                            .includes(search.toLowerCase()) ||
+                          elem.note
+                            .toLowerCase()
+                            .includes(search.toLowerCase()) ||
+                          elem.options
+                            .toLowerCase()
+                            .includes(search.toLowerCase())
+                        );
+                      })
+                      .map((data, index) => (
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>
+                            {card === "strengths"
+                              ? data.strength
                               : card === "weaknesses"
-                              ? setRec(data.weaknessId)
+                              ? data.weakness
                               : card === "opportunities"
-                              ? setRec(data.opportunityId)
-                              : setRec(data.threatId)
-                          }
-                        >
-                          <AiOutlineDelete />
-                        </td>
-                      </tr>
-                    ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <CustomTablePagination
-                  id="pagingg"
-                  rowsPerPageOptions={[
-                    25,
-                    50,
-                    100,
-                    { label: "All", value: -1 },
-                  ]}
-                  colSpan={12}
-                  count={voter.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  slotProps={{
-                    select: {
-                      "aria-label": "rows per page",
-                    },
-                    actions: {
-                      // showFirstButton: true,
-                      // showLastButton: true,
-                    },
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </tr>
-            </tfoot>
-          </table>
-          <Dialog className="mt-3" open={open} onClose={handleClose}>
-            <DialogTitle id="form-header-popup">Add Analysis</DialogTitle>
-            <DialogContent>
-              <form style={{ width: "100%" }}>
-                <div className="data-input-fields">
-                  <TextField
-                    margin="dense"
-                    label="Name"
-                    fullWidth
-                    value={
-                      card === "strengths"
-                        ? formData.strength
-                        : card === "weaknesses"
-                        ? formData.weakness
-                        : card === "opportunities"
-                        ? formData.opportunity
-                        : formData.threat
-                    }
-                    onChange={(e) => handleInputChange(e)}
-                    name={
-                      card === "strengths"
-                        ? "strength"
-                        : card === "weaknesses"
-                        ? "weakness"
-                        : card === "opportunities"
-                        ? "opportunity"
-                        : "threat"
-                    }
+                              ? data.opportunity
+                              : data.threat}
+                          </td>
+                          <td>{data.note}</td>
+                          <td
+                            className="text-center fs-5"
+                            style={{ color: "red", cursor: "pointer" }}
+                            onClick={() =>
+                              card === "strengths"
+                                ? setRec(data.strengthId)
+                                : card === "weaknesses"
+                                ? setRec(data.weaknessId)
+                                : card === "opportunities"
+                                ? setRec(data.opportunityId)
+                                : setRec(data.threatId)
+                            }
+                          >
+                            <AiOutlineDelete />
+                          </td>
+                        </tr>
+                      ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <CustomTablePagination
+                    id="pagingg"
+                    rowsPerPageOptions={[
+                      25,
+                      50,
+                      100,
+                      { label: "All", value: -1 },
+                    ]}
+                    colSpan={12}
+                    count={voter.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    slotProps={{
+                      select: {
+                        "aria-label": "rows per page",
+                      },
+                      actions: {
+                        // showFirstButton: true,
+                        // showLastButton: true,
+                      },
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
                   />
-                </div>
-                <div className="data-input-fields">
-                  <TextField
-                    id="note"
-                    margin="dense"
-                    label="Note"
-                    fullWidth
-                    value={formData.note}
-                    onChange={(e) => handleInputChange(e)}
-                    name="note"
-                  />
-                </div>
+                </tr>
+              </tfoot>
+            </table>
+            <Dialog className="mt-3" open={open} onClose={handleClose}>
+              <DialogTitle id="form-header-popup">Add Analysis</DialogTitle>
+              <DialogContent>
+                <form style={{ width: "100%" }}>
+                  <div className="data-input-fields">
+                    <TextField
+                      margin="dense"
+                      label="Name"
+                      fullWidth
+                      value={
+                        card === "strengths"
+                          ? formData.strength
+                          : card === "weaknesses"
+                          ? formData.weakness
+                          : card === "opportunities"
+                          ? formData.opportunity
+                          : formData.threat
+                      }
+                      onChange={(e) => handleInputChange(e)}
+                      name={
+                        card === "strengths"
+                          ? "strength"
+                          : card === "weaknesses"
+                          ? "weakness"
+                          : card === "opportunities"
+                          ? "opportunity"
+                          : "threat"
+                      }
+                    />
+                  </div>
+                  <div className="data-input-fields">
+                    <TextField
+                      id="note"
+                      margin="dense"
+                      label="Note"
+                      fullWidth
+                      value={formData.note}
+                      onChange={(e) => handleInputChange(e)}
+                      name="note"
+                    />
+                  </div>
 
-                <div className="data-buttons d-flex justify-content-end">
-                  <Button
-                    id="input-btn-submit"
-                    className="submit"
-                    type="submit"
-                    onClick={(e) => handleSubmit(e)}
-                    variant="outlined"
-                    style={{ width: "max-content", height: "40px" }}
-                  >
-                    Submit
-                  </Button>
-                </div>
-              </form>
-            </DialogContent>
-          </Dialog>
+                  <div className="data-buttons d-flex justify-content-end">
+                    <Button
+                      id="input-btn-submit"
+                      className="submit"
+                      type="submit"
+                      onClick={(e) => handleSubmit(e)}
+                      variant="outlined"
+                      style={{ width: "max-content", height: "40px" }}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
         {showDeleteConfirmation && (
           <div className="confirmation">

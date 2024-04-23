@@ -27,7 +27,7 @@
   flex-direction: column;
   justify-content: center;
   width: 500px;
-  height: 500px;
+  height: auto;
   border-radius: 10px;
   background-color: #ffffff;
 }
@@ -864,11 +864,12 @@ tbody .fc-scrollgrid-sync-inner a {
   border: none;
   border-radius: 3px;
   padding: 5px 25px;
+  transition: 0.3s all ease;
+  font-weight: 600;
 }
 .log-btn:hover {
-  background-color: rgba(249, 5, 5, 0.467);
+  background-color: rgba(153, 113, 113, 0.467);
   color: white;
-  border: 1px solid rgba(0, 0, 0, 0.242);
 }
 
 .confirmation {

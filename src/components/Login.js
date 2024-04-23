@@ -4,7 +4,7 @@ import { PiEyeLight } from "react-icons/pi";
 import { PiEyeSlashLight } from "react-icons/pi";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Header from "./Header";
 
 const Login = () => {
@@ -14,7 +14,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    otp:""
+    otp: "",
   });
 
   const handleInputChange = (e) => {
@@ -51,15 +51,6 @@ const Login = () => {
         } catch (error) {
           console.error("Email Failed", error);
         }
-        // const otpRes = await axios.post(
-        //   https://api.orivehrms.com/api/v1/auth/login-email-otp/${decoded.email}/424098
-        // );
-        // console.log("RESSS", otpRes);
-        // nav("/Employee-Dashboard");
-        // localStorage.setItem("FName", decoded.firstname);
-        // localStorage.setItem("LName", decoded.lastname);
-        // localStorage.setItem("AuthToken", response.data.access_token);
-        // localStorage.setItem("Role", decoded.role);
       }
     } catch (error) {
       console.error("Login error", error);
@@ -78,7 +69,7 @@ const Login = () => {
       localStorage.setItem("Role", dec.role);
       window.location.reload();
     } catch (error) {
-      alert("Check the OTP!!")
+      alert("Check the OTP!!");
       console.error("MLA login failed", error);
     }
   };
@@ -88,7 +79,7 @@ const Login = () => {
       <Header />
       <div className="register">
         <div className="register-form">
-        {dec.role === "MLA" ? (
+          {dec.role === "MLA" ? (
             <form
               className="register-form-content"
               style={{ flexGrow: 1, height: "385px" }}
@@ -138,7 +129,7 @@ const Login = () => {
                     margin="dense"
                     type="text"
                     fullWidth
-                    placeholder="Employee Id"
+                    placeholder="Username"
                     name="username"
                     id="username"
                     value={formData.username}
@@ -173,14 +164,7 @@ const Login = () => {
                 </div>
               </div>
               <div className="">
-                <div className="d-flex align-items-center justify-content-between mt-2 mb-3">
-                  <div
-                    className="d-flex align-items-center"
-                    style={{ fontWeight: "600", fontSize: "0.8rem" }}
-                  >
-                    <input className="" type="checkbox" />
-                    <div>Remember Me</div>
-                  </div>
+                <div className="d-flex align-items-center justify-content-end mt-2 mb-3">
                   <div style={{ fontWeight: "600", fontSize: "0.8rem" }}>
                     Forgot Password?
                   </div>

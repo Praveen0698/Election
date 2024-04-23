@@ -13,11 +13,11 @@ const Email = () => {
   const [attachments, setAttachments] = useState([]);
 
   const [formData, setFormData] = useState({
-    to:[],
+    to: [],
     cc: [],
     subject: "",
     body: "",
-    attachments: [],
+    file: [],
   });
 
   const handleAttachmentChange = (event) => {
@@ -33,12 +33,13 @@ const Email = () => {
   };
 
   useEffect(() => {
-    setFormData({
-      ...formData,
-      attachments: attachments
-    })
-  }, [attachments])
-  
+    if (attachments.length > 0) {
+      setFormData({
+        ...formData,
+        file: attachments[0],
+      });
+    }
+  }, [attachments]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -48,32 +49,27 @@ const Email = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(e) 
     e.preventDefault();
     try {
-
-      const formDataToSend = new FormData();
-      formDataToSend.append("subject", formData.subject);
-      formDataToSend.append("body", formData.body);
-      formDataToSend.append("to", JSON.stringify(formData.to));
-      formDataToSend.append("cc", JSON.stringify(formData.cc));
-      attachments.forEach((attachment) => {
-        formDataToSend.append("file", attachment);
-      });
-      const response = await axios.post("http://13.201.88.48:7070/mail/send", formDataToSend, {headers: {
-        "Content-Type": "multipart/form-data",
-      },
-});
-      alert("Sent Successfully!!")
+      const response = await axios.post(
+        "http://13.201.88.48:7070/mail/send",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      alert("Sent Successfully!!");
       console.log("Response from server:", response.data);
     } catch (error) {
-      alert("Please Check the Datail !!")
+      alert("Please Check the Datail !!");
       console.error("Error submitting email:", error);
     }
   };
 
   console.log("formDta", formData);
-  console.log("att", attachments);
+  // console.log("att", attachments);
 
   return (
     <div>
@@ -159,17 +155,16 @@ const Email = () => {
                   </button>
                   <input
                     type="file"
-                    id="attachment"
+                    id="file"
                     className="visually-hidden"
                     multiple
                     // onChange={}
-                    name="attachments"
+                    name="file"
                     onChange={(e) => {
-                      handleInputChange(e);
                       handleAttachmentChange(e);
                     }}
                   />
-                  <label htmlFor="attachment">
+                  <label htmlFor="file">
                     <AttachFileIcon
                       style={{ marginLeft: "20px", cursor: "pointer" }}
                     />

@@ -96,9 +96,21 @@ const Dashboard = () => {
       .catch((err) => console.error(err));
   };
 
+  const [Voter, setVoter] = useState([]);
+
+  const getVoter = async () => {
+    await axios
+      .get("http://13.201.88.48:7070/voterdatabase/get/voterdatabase")
+      .then((res) => {
+        setVoter(res.data);
+      })
+      .catch((err) => console.error(err));
+  };
+
   useEffect(() => {
     handleVolunteer();
     getEvent();
+    getVoter();
   }, []);
 
   return (
@@ -116,7 +128,7 @@ const Dashboard = () => {
             <div className="dash-cont">
               <p className="dash-cont-p">Voter</p>
               <div className="dash-cont-child">
-                <span className="dash-cont-span">1</span>
+                <span className="dash-cont-span">{Voter.length}</span>
                 <p className="dash-cont-child-p">Voter</p>
               </div>
             </div>

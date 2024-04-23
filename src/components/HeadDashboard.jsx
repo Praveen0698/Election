@@ -1,10 +1,16 @@
 import React from "react";
 import logo from "../assets/images/bjp-logo.png";
-import notification from "../assets/images/Notification.png";
-import profile from "../assets/images/Profile.png";
-import setting from "../assets/images/Settings.png";
+import { useNavigate } from "react-router-dom";
 
 const HeadDashboard = ({ side, setSide, navClick, setNavClick }) => {
+  const navigation = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("Role");
+    localStorage.removeItem("LName");
+    localStorage.removeItem("FName");
+    localStorage.removeItem("AuthToken");
+    navigation("/");
+  };
   return (
     <div>
       <div className="headDash">
@@ -41,10 +47,9 @@ const HeadDashboard = ({ side, setSide, navClick, setNavClick }) => {
             </div>
           </div>
           <div className="head-icons mx-5">
-            {/* <img src={notification} alt="" />
-            <img src={setting} alt="" />
-            <img src={profile} alt="" /> */}
-            <button className="log-btn">Logout</button>
+            <button className="log-btn" onClick={handleLogout}>
+              Logout
+            </button>
           </div>
         </div>
       </div>

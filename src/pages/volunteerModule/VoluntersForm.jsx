@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import HeadDashboard from "../../components/HeadDashboard";
 import { LiaGreaterThanSolid } from "react-icons/lia";
@@ -10,6 +10,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ImageUploader from "react-images-upload";
+import { FaEdit, FaTrashAlt, FaEye } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
 
 import {
   TablePagination,
@@ -22,6 +24,7 @@ import Button from "@mui/material/Button";
 import DialogContent from "@mui/material/DialogContent";
 import { MdAdd } from "react-icons/md";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import axios from "axios";
 
 const VolunteersForm = () => {
   const [navClick, setNavClick] = useState(false);
@@ -68,12 +71,9 @@ const VolunteersForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    email: "",
-    password: "",
     address: "",
-    profile: "",
-    area: "",
-    image: "",
+    gender: "",
+    image_upload: "",
   });
 
   const handleInputChange = (e) => {
@@ -97,38 +97,22 @@ const VolunteersForm = () => {
     setPage(0);
   };
 
-  const Type = [
+  const genderType = [
     {
       value: "Choose",
-      label: "Select Depatment Name",
+      label: "Select Gender",
     },
     {
-      value: "Human Resources Department",
-      label: "Human Resources Department",
+      value: "male",
+      label: "Male",
     },
     {
-      value: "Marketing Department",
-      label: "Marketing Department",
+      value: "female",
+      label: "Female",
     },
     {
-      value: "Finance Department",
-      label: "Finance Department",
-    },
-    {
-      value: "Information Technology Department",
-      label: "Information Technology Department",
-    },
-    {
-      value: "Customer Service Department",
-      label: "Customer Service Department",
-    },
-    {
-      value: "Research and Development Department",
-      label: "Research and Development Department",
-    },
-    {
-      value: "Legal Department",
-      label: "Legal Department",
+      value: "others",
+      label: "Others",
     },
   ];
 
@@ -143,6 +127,15 @@ const VolunteersForm = () => {
     }));
     setPictures([...pictures, ...newPictures]);
   };
+
+  useEffect(() => {
+    if (pictures.length > 0) {
+      setFormData({
+        ...formData,
+        image_upload: pictures[0].file,
+      });
+    }
+  }, [pictures]);
 
   const renderVolunteerData = () => {
     return (
@@ -171,8 +164,57 @@ const VolunteersForm = () => {
     setOpen(false);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleSave = async () => {
+    await axios
+      .post("http://13.201.88.48:7070/volunteers/create/volunteers", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then(() => {
+        toast.success("Added Successfully !");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        setPictures([]);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const getVolunteer = async () => {
+    await axios
+      .get("http://13.201.88.48:7070/volunteers/get/volunteers")
+      .then((res) => {
+        setVolunteer(res.data);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    getVolunteer();
+  }, []);
+
+  const deleteVolunteer = async (sl) => {
+    await axios
+      .delete(`http://13.201.88.48:7070/volunteers/delete/${sl}`)
+      .then(() => {
+        toast.success("Deleted Successfully !");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      })
+
+      .catch((error) => console.error("Error deleting campaign:", error));
+  };
   return (
     <div>
+      <ToastContainer
+        autoClose={2000}
+        position="top-center"
+        toastClassName="dark-toast"
+      />
       <HeadDashboard
         navClick={navClick}
         setNavClick={setNavClick}
@@ -194,7 +236,7 @@ const VolunteersForm = () => {
               <Dialog className="mt-3" open={open} onClose={handleClose}>
                 <DialogTitle id="form-header-popup">Add Volunteer</DialogTitle>
                 <DialogContent>
-                  <form style={{ width: "100%" }}>
+                  <form style={{ width: "100%" }} onSubmit={handleSubmit}>
                     <div className="data-input-fields">
                       <TextField
                         id="name"
@@ -215,26 +257,7 @@ const VolunteersForm = () => {
                         name="phone"
                       />
                     </div>
-                    <div className="data-input-fields">
-                      <TextField
-                        id="email"
-                        margin="dense"
-                        label="Email"
-                        fullWidth
-                        value={formData.email}
-                        onChange={(e) => handleInputChange(e)}
-                        name="email"
-                      />
-                      <TextField
-                        id="password"
-                        margin="dense"
-                        label="***"
-                        fullWidth
-                        value={formData.password}
-                        onChange={(e) => handleInputChange(e)}
-                        name="password"
-                      />
-                    </div>
+
                     <div className="data-input-fields">
                       <TextField
                         id="address"
@@ -245,32 +268,23 @@ const VolunteersForm = () => {
                         onChange={(e) => handleInputChange(e)}
                         name="address"
                       />
-                      <TextField
-                        id="profile"
-                        margin="dense"
-                        label="Profile"
-                        fullWidth
-                        value={formData.profile}
-                        onChange={(e) => handleInputChange(e)}
-                        name="profile"
-                      />
                     </div>
                     <div className="data-input-fields">
                       <FormControl fullWidth>
                         <InputLabel id="demo-company-select-label">
-                          Area
+                          Gender
                         </InputLabel>
                         <Select
                           labelId="demo-area-select-label"
                           id="selectedCompany"
-                          value={formData.area}
-                          name="area"
+                          value={formData.gender}
+                          name="gender"
                           label="Select"
                           onChange={(e) => handleInputChange(e)}
                           required
                         >
-                          {Type &&
-                            Type.map((item, index) => {
+                          {genderType &&
+                            genderType.map((item, index) => {
                               return (
                                 <MenuItem key={index} value={item.value}>
                                   {item.value}
@@ -308,7 +322,7 @@ const VolunteersForm = () => {
                         id="input-btn-submit"
                         className="submit"
                         type="submit"
-                        // onClick={()}
+                        onClick={handleSave}
                         variant="outlined"
                         style={{ width: "max-content", height: "30px" }}
                       >
@@ -354,13 +368,11 @@ const VolunteersForm = () => {
               <table id="table" className="table table-bordered table-hover">
                 <thead>
                   <tr className="" style={{ textTransform: "uppercase" }}>
-                    <th></th>
-                    <th>Volunteer Id</th>
+                    <th>Sl No</th>
                     <th>Name</th>
                     <th>Phone</th>
-                    <th>Area</th>
-                    <th>Email</th>
-                    <th>Profile</th>
+                    <th>Address</th>
+                    <th>Gender</th>
                     <th>Option</th>
                   </tr>
                 </thead>
@@ -413,11 +425,17 @@ const VolunteersForm = () => {
                       .map((data, index) => (
                         <tr>
                           <td>{index + 1}</td>
-                          <td>{data.votername}</td>
-                          <td>{data.mobilenumber}</td>
-                          <td>{data.state}</td>
-                          <td>{data.district}</td>
-                          <td>{data.pincode}</td>
+                          <td>{data.name}</td>
+                          <td>{data.phone}</td>
+                          <td>{data.address}</td>
+                          <td>{data.gender}</td>
+                          <td className="text-center">
+                            <FaTrashAlt
+                              // className="action-delete"
+                              style={{ color: "red", cursor: "pointer" }}
+                              onClick={() => deleteVolunteer(data.sl)}
+                            />
+                          </td>
                         </tr>
                       ))
                   )}

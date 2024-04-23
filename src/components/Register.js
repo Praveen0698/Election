@@ -11,11 +11,11 @@ const Register = () => {
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
-    email:"",
-    password:"",
-    role:"",
-    mobilenumber:"",
-    username:""
+    email: "",
+    password: "",
+    role: "",
+    mobilenumber: "",
+    username: "",
   });
 
   const handleInputChange = (e) => {
@@ -27,10 +27,10 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/register",
+        "http://13.201.88.48:7070/api/v1/auth/register",
         formData
       );
-      Navigate("/",{state:{token:response.data}})
+      Navigate("/", { state: { token: response.data } });
     } catch (error) {
       console.error("Login error", error);
     }
@@ -40,8 +40,11 @@ const Register = () => {
     <div>
       <div className="register">
         <div className="register-form">
-          <form className="register-form-content" style={{ flexGrow: 1 }}
-          onSubmit={handleSubmit}>
+          <form
+            className="register-form-content"
+            style={{ flexGrow: 1 }}
+            onSubmit={handleSubmit}
+          >
             <div className="register-form-header">REGISTER</div>
             <div className="register-input-fields">
               <div className="data-input-fields-register">

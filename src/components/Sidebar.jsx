@@ -4,7 +4,7 @@ import post from "../assets/post.png";
 import voter from "../assets/voter.png";
 import areas from "../assets/images/Areas.png";
 import video from "../assets/video-marketing.png";
-import volunteer from '../assets/images/Volunteer.png'
+import volunteer from "../assets/images/Volunteer.png";
 import social from "../assets/social-media.png";
 import campaign from "../assets/images/megaphone 1.png";
 import sms from "../assets/images/SMS.png";
@@ -57,7 +57,7 @@ const Sidebar = ({ side, navClick }) => {
     <div
       className="sidebar"
       style={{
-        zIndex:"100",
+        zIndex: "100",
         position: "relative",
         left:
           window.innerWidth < 1200 ? (side ? "" : "-400px") : side ? "" : "",
@@ -135,8 +135,26 @@ const Sidebar = ({ side, navClick }) => {
             Volunteers
           </div>
         </li>
+        <li
+          className="sidebar-list"
+          onClick={() => navigation("/voters/voter-list")}
+        >
+          <div className="sidebar-content">
+            <img
+              src={voter}
+              alt=""
+              style={{
+                height: navClick ? "35px" : "",
+                width: navClick ? "35px" : "",
+                marginLeft: navClick ? "42px" : "",
+                paddingRight: navClick ? "10px" : "",
+              }}
+            />
+            Voters
+          </div>
+        </li>
 
-        <li className="sidebar-list" onClick={toggleVoters}>
+        {/* <li className="sidebar-list" onClick={toggleVoters}>
           <div className="sidebar-content">
             <img
               src={voter}
@@ -175,7 +193,7 @@ const Sidebar = ({ side, navClick }) => {
               Import Voter
             </p>
           </div>
-        )}
+        )} */}
         <li className="sidebar-list" onClick={toggleMedia}>
           <div className="sidebar-content">
             <img
@@ -263,7 +281,7 @@ const Sidebar = ({ side, navClick }) => {
             </p>
           </div>
         )} */}
-        <li
+        {/* <li
           className="sidebar-list"
           onClick={() => navigation("/bulk-sms/write-sms")}
         >
@@ -280,7 +298,7 @@ const Sidebar = ({ side, navClick }) => {
             />
             Bulk SMS
           </div>
-        </li>
+        </li> */}
         <li
           className="sidebar-list"
           onClick={() => navigation("/email/write-email")}
