@@ -27,7 +27,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://13.201.88.48:7070/api/v1/auth/register",
+        "http://13.201.88.48:6060/api/v1/auth/register",
         formData
       );
       Navigate("/", { state: { token: response.data } });

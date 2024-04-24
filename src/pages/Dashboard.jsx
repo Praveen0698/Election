@@ -54,18 +54,18 @@ const Dashboard = () => {
   const handleEventSave = async () => {
     if (selectedEvent) {
       await axios.put(
-        `http://13.201.88.48:7070/events/${selectedEvent._def.extendedProps.eventId}`,
+        `http://13.201.88.48:6060/events/${selectedEvent._def.extendedProps.eventId}`,
         { title: selectedPlace, date: updateDate }
       );
     } else {
-      await axios.post("http://13.201.88.48:7070/events", formData);
+      await axios.post("http://13.201.88.48:6060/events", formData);
     }
     setModalIsOpen(false);
   };
 
   const getEvent = async () => {
     try {
-      const res = await axios.get("http://13.201.88.48:7070/events");
+      const res = await axios.get("http://13.201.88.48:6060/events");
       const filteredEvents = res.data.filter((event) => {
         const eventDate = new Date(event.date);
         const currentDate = new Date();
@@ -85,7 +85,7 @@ const Dashboard = () => {
 
   const handleDelete = async () => {
     await axios.delete(
-      `http://13.201.88.48:7070/events/${selectedEvent._def.extendedProps.eventId}`
+      `http://13.201.88.48:6060/events/${selectedEvent._def.extendedProps.eventId}`
     );
     setModalIsOpen(false);
     // getEvent();
@@ -94,7 +94,7 @@ const Dashboard = () => {
   const [getVolunterr, setGetVolunteer] = useState([]);
   const handleVolunteer = async () => {
     await axios
-      .get("http://13.201.88.48:7070/volunteers/get/volunteers")
+      .get("http://13.201.88.48:6060/volunteers/get/volunteers")
       .then((res) => setGetVolunteer(res.data))
       .catch((err) => console.error(err));
   };
@@ -103,7 +103,7 @@ const Dashboard = () => {
 
   const getVoter = async () => {
     await axios
-      .get("http://13.201.88.48:7070/voterdatabase/get/voterdatabase")
+      .get("http://13.201.88.48:6060/voterdatabase/get/voterdatabase")
       .then((res) => {
         setVoter(res.data);
       })

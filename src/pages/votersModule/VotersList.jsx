@@ -171,7 +171,7 @@ const VotersList = () => {
   const handleSave = async () => {
     await axios
       .post(
-        "http://13.201.88.48:7070/voterdatabase/create/voterdatabase",
+        "http://13.201.88.48:6060/voterdatabase/create/voterdatabase",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -189,7 +189,7 @@ const VotersList = () => {
 
   const getVoter = async () => {
     await axios
-      .get("http://13.201.88.48:7070/voterdatabase/get/voterdatabase")
+      .get("http://13.201.88.48:6060/voterdatabase/get/voterdatabase")
       .then((res) => {
         setVoter(res.data);
       })
@@ -202,7 +202,7 @@ const VotersList = () => {
 
   const deleteVoter = async (sl) => {
     await axios
-      .delete(`http://13.201.88.48:7070/voterdatabase/delete/${sl}`)
+      .delete(`http://13.201.88.48:6060/voterdatabase/delete/${sl}`)
       .then(() => {
         toast.success("Deleted Successfully !");
         setTimeout(() => {

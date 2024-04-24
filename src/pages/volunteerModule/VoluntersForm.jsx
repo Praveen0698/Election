@@ -170,7 +170,7 @@ const VolunteersForm = () => {
 
   const handleSave = async () => {
     await axios
-      .post("http://13.201.88.48:7070/volunteers/create/volunteers", formData, {
+      .post("http://13.201.88.48:6060/volunteers/create/volunteers", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then(() => {
@@ -185,7 +185,7 @@ const VolunteersForm = () => {
 
   const getVolunteer = async () => {
     await axios
-      .get("http://13.201.88.48:7070/volunteers/get/volunteers")
+      .get("http://13.201.88.48:6060/volunteers/get/volunteers")
       .then((res) => {
         setVolunteer(res.data);
       })
@@ -198,7 +198,7 @@ const VolunteersForm = () => {
 
   const deleteVolunteer = async (sl) => {
     await axios
-      .delete(`http://13.201.88.48:7070/volunteers/delete/${sl}`)
+      .delete(`http://13.201.88.48:6060/volunteers/delete/${sl}`)
       .then(() => {
         toast.success("Deleted Successfully !");
         setTimeout(() => {

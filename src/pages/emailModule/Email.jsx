@@ -54,7 +54,7 @@ const Email = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://13.201.88.48:7070/mail/send",
+        "http://13.201.88.48:6060/mail/send",
         formData,
         {
           headers: {

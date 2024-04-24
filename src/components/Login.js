@@ -26,7 +26,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://13.201.88.48:7070/api/v1/auth/authenticate",
+        "http://13.201.88.48:6060/api/v1/auth/authenticate",
         formData
       );
       console.log("Login successful", response.data);
@@ -46,7 +46,7 @@ const Login = () => {
         try {
           setDec(decoded);
           const emailRes = await axios.post(
-            `http://13.201.88.48:7070/api/v1/auth/initiate-otp-login/${decoded.email}`
+            `http://13.201.88.48:6060/api/v1/auth/initiate-otp-login/${decoded.email}`
           );
         } catch (error) {
           console.error("Email Failed", error);
@@ -60,7 +60,7 @@ const Login = () => {
   const handleMlaLogin = async () => {
     try {
       const otpRes = await axios.post(
-        `http://13.201.88.48:7070/api/v1/auth/login-email-otp/${dec.email}/${formData.otp}`
+        `http://13.201.88.48:6060/api/v1/auth/login-email-otp/${dec.email}/${formData.otp}`
       );
       Navigate("/dashboard");
       localStorage.setItem("FName", dec.firstname);

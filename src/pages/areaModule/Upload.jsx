@@ -77,16 +77,16 @@ const Upload = () => {
           coordinates: [85.5841, 21.6344],
         },
       },
-      {
-        type: "Feature",
-        properties: {
-          title: "Bhubaneswar",
-        },
-        geometry: {
-          type: "Point",
-          coordinates: [85.8986024, 20.306082],
-        },
-      },
+      // {
+      //   type: "Feature",
+      //   properties: {
+      //     title: "Bhubaneswar",
+      //   },
+      //   geometry: {
+      //     type: "Point",
+      //     coordinates: [85.8986024, 20.306082],
+      //   },
+      // },
       {
         type: "Feature",
         properties: {
@@ -248,8 +248,6 @@ const Upload = () => {
     });
   }, [placeName, selectedArea]);
 
-
-
   const handleUpload = async () => {
     setGeoJson({
       features: [
@@ -268,7 +266,7 @@ const Upload = () => {
     });
 
     await axios
-      .post("http://13.201.88.48:7070/api/featurecollection/create", formdata)
+      .post("http://13.201.88.48:6060/api/featurecollection/create", formdata)
       .then((res) => console.log(res))
       .catch((err) => console.error(err));
 
@@ -277,7 +275,7 @@ const Upload = () => {
 
   const getGeoData = async () => {
     await axios
-      .get("http://13.201.88.48:7070/api/featurecollection/features/1")
+      .get("http://13.201.88.48:6060/api/featurecollection/features/1")
       .then((res) => {
         setGeoJson({
           features: res.data,
@@ -286,8 +284,6 @@ const Upload = () => {
       })
       .catch((err) => console.error(err));
   };
-
-
 
   useEffect(() => {
     getGeoData();

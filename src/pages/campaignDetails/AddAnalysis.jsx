@@ -122,7 +122,7 @@ const AddAnalysis = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get(`http://13.201.88.48:7070/${card}`);
+      const response = await axios.get(`http://13.201.88.48:6060/${card}`);
       setVoter(response.data);
     } catch (error) {
       console.error("Error getting data", error);
@@ -133,7 +133,7 @@ const AddAnalysis = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://13.201.88.48:7070/${card}`,
+        `http://13.201.88.48:6060/${card}`,
         formData
       );
       toast.success("Submitted Successfully !");
@@ -154,7 +154,7 @@ const AddAnalysis = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://13.201.88.48:7070/${card}/${rec}`);
+      await axios.delete(`http://13.201.88.48:6060/${card}/${rec}`);
       toast.success("Deleted Successfully !");
       setTimeout(() => {
         window.location.reload();
