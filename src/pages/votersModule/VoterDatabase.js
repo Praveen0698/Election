@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
-import DataNotFound from '../../assets/images/no data 1.png'
+import DataNotFound from "../../assets/images/no data 1.png";
 import {
   TablePagination,
   tablePaginationClasses as classes,
@@ -27,40 +27,40 @@ const VoterDatabase = () => {
   };
 
   const CustomTablePagination = styled(TablePagination)`
-  & .${classes.toolbar} {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 0 0 0 10px;
+    & .${classes.toolbar} {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 0 0 0 10px;
 
-    @media (min-width: 768px) {
-      flex-direction: row;
-      align-items: center;
+      @media (min-width: 768px) {
+        flex-direction: row;
+        align-items: center;
+      }
     }
-  }
 
-  & .${classes.selectLabel} {
-    margin: 0;
-  }
-
-  & .${classes.displayedRows} {
-    margin: 0;
-
-    @media (min-width: 768px) {
-      margin-left: auto;
+    & .${classes.selectLabel} {
+      margin: 0;
     }
-  }
 
-  & .${classes.spacer} {
-    display: none;
-  }
+    & .${classes.displayedRows} {
+      margin: 0;
 
-  & .${classes.actions} {
-    display: flex;
-    gap: 0rem;
-  }
-`;
+      @media (min-width: 768px) {
+        margin-left: auto;
+      }
+    }
+
+    & .${classes.spacer} {
+      display: none;
+    }
+
+    & .${classes.actions} {
+      display: flex;
+      gap: 0rem;
+    }
+  `;
 
   const [formData, setFormData] = useState({
     state: "",
@@ -15423,7 +15423,7 @@ const VoterDatabase = () => {
     try {
       setClick(true);
       const response = await axios.get(
-        `http://localhost:8080/voter/voter/${formData.pin}`
+        `http://13.201.88.48:6060/voterdatabaselist/voter/${formData.pin}`
       );
       setVoter(response.data);
     } catch (error) {
@@ -15437,7 +15437,11 @@ const VoterDatabase = () => {
     return (
       <tr>
         <td colSpan="12" className="text-center">
-          <img style={{ margin: "50px 0 50px 0" }} src={DataNotFound} alt="No Data Found"></img>
+          <img
+            style={{ margin: "50px 0 50px 0" }}
+            src={DataNotFound}
+            alt="No Data Found"
+          ></img>
           <h1>No Data Found!</h1>
           <p>
             It Looks like there is no data to display in this table at the
@@ -15565,7 +15569,7 @@ const VoterDatabase = () => {
                   type="submit"
                   onClick={(e) => savePin(e)}
                   variant="outlined"
-                  style={{width:"max-content", height:"40px"}}
+                  style={{ width: "max-content", height: "40px" }}
                 >
                   Search
                 </Button>
@@ -15596,26 +15600,34 @@ const VoterDatabase = () => {
               </thead>
               <tbody>
                 {voter.length === 0 && click ? (
-                  <div style={{position:'absolute', left:"60%", marginTop:"80px"}}>
-                  <ThreeDots
-                    visible={true}
-                    height="80"
-                    width="80"
-                    color="rgba(242, 101, 34, 1)"
-                    radius="9"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "60%",
+                      marginTop: "80px",
+                    }}
+                  >
+                    <ThreeDots
+                      visible={true}
+                      height="80"
+                      width="80"
+                      color="rgba(242, 101, 34, 1)"
+                      radius="9"
+                      ariaLabel="three-dots-loading"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                    />
                   </div>
+                ) : voter.length === 0 ? (
+                  renderCompanyData()
                 ) : (
-                  voter.length===0?renderCompanyData():(rowsPerPage > 0
-                  ? voter.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : voter
-                )
+                  (rowsPerPage > 0
+                    ? voter.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : voter
+                  )
                     .filter((elem) => {
                       if (search.length === 0) return elem;
                       return (
@@ -15646,25 +15658,30 @@ const VoterDatabase = () => {
               </tbody>
               <tfoot>
                 <tr>
-                <CustomTablePagination
-                id="pagingg"
-                rowsPerPageOptions={[25, 50, 100, { label: "All", value: -1 }]}
-                colSpan={12}
-                count={voter.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                slotProps={{
-                  select: {
-                    "aria-label": "rows per page",
-                  },
-                  actions: {
-                    // showFirstButton: true,
-                    // showLastButton: true,
-                  },
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
+                  <CustomTablePagination
+                    id="pagingg"
+                    rowsPerPageOptions={[
+                      25,
+                      50,
+                      100,
+                      { label: "All", value: -1 },
+                    ]}
+                    colSpan={12}
+                    count={voter.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    slotProps={{
+                      select: {
+                        "aria-label": "rows per page",
+                      },
+                      actions: {
+                        // showFirstButton: true,
+                        // showLastButton: true,
+                      },
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                  />
                 </tr>
               </tfoot>
             </table>

@@ -16,12 +16,7 @@ const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState("");
   const [updateDate, setUpdateDate] = useState();
-  const [events, setEvents] = useState([
-    {
-      title: "hjc",
-      date: "2024-04-18",
-    },
-  ]);
+  const [events, setEvents] = useState([]);
 
   const handleEventClick = (info) => {
     setSelectedEvent(info.event);
@@ -69,10 +64,18 @@ const Dashboard = () => {
   };
 
   const getEvent = async () => {
-    await axios
-      .get("http://13.201.88.48:7070/events")
-      .then((res) => setEvents(res.data))
-      .catch((err) => console.error(err));
+    try {
+      const res = await axios.get("http://13.201.88.48:7070/events");
+      const filteredEvents = res.data.filter((event) => {
+        const eventDate = new Date(event.date);
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+        return eventDate >= currentDate;
+      });
+      setEvents(filteredEvents);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const closeModal = () => {

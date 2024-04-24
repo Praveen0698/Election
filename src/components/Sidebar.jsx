@@ -3,14 +3,9 @@ import dashboard from "../assets/dashboard.png";
 import post from "../assets/post.png";
 import voter from "../assets/voter.png";
 import areas from "../assets/images/Areas.png";
-import video from "../assets/video-marketing.png";
 import volunteer from "../assets/images/Volunteer.png";
-import social from "../assets/social-media.png";
 import campaign from "../assets/images/megaphone 1.png";
-import sms from "../assets/images/SMS.png";
 import email from "../assets/images/Email.png";
-import chat from "../assets/chat.png";
-import credit from "../assets/credit-card.png";
 import data from "../assets/data.png";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -135,7 +130,7 @@ const Sidebar = ({ side, navClick }) => {
             Volunteers
           </div>
         </li>
-        <li
+        {/* <li
           className="sidebar-list"
           onClick={() => navigation("/voters/voter-list")}
         >
@@ -152,9 +147,9 @@ const Sidebar = ({ side, navClick }) => {
             />
             Voters
           </div>
-        </li>
+        </li> */}
 
-        {/* <li className="sidebar-list" onClick={toggleVoters}>
+        <li className="sidebar-list" onClick={toggleVoters}>
           <div className="sidebar-content">
             <img
               src={voter}
@@ -180,12 +175,7 @@ const Sidebar = ({ side, navClick }) => {
             >
               Voters List
             </p>
-            <p
-              className="sidebar-submodule-p"
-              onClick={() => navigation("/voters/voter-verification")}
-            >
-              Voter's Category
-            </p>
+
             <p
               className="sidebar-submodule-p"
               onClick={() => navigation("/voters/voter-database")}
@@ -193,7 +183,7 @@ const Sidebar = ({ side, navClick }) => {
               Import Voter
             </p>
           </div>
-        )} */}
+        )}
         <li className="sidebar-list" onClick={toggleMedia}>
           <div className="sidebar-content">
             <img
